@@ -1,0 +1,60 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id BigInt @id
+
+  /// Whether or not they have currently subscribed to a premium plan
+  premium Boolean @default(false)
+
+  tier Tiers?
+
+  /// Maximum usage guild Premium
+  /// @tier 1 (Premium)
+  /// @tier 3 (Supporter)
+  maximumPremium Int @default(0) @map("maximum_premium") @db.SmallInt
+
+  transactions Transaction[]
+
+  guild Guild[]
+
+  @@map("user")
+}
+
+model Guild {
+  id BigInt @id
+
+  userId BigInt @map("user_id")
+
+  premium Boolean @default(false)
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("guild")
+}
+
+model Transaction {
+  id BigInt @id @default(autoincrement())
+
+  userId BigInt @map("user_id")
+
+  amount Int
+
+  tier Tiers
+
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("transaction")
+}
+
+enum Tiers {
+  Premium
+  Supporter
+  CustomBot
+}

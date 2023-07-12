@@ -1,7 +1,7 @@
 import { API } from '@discordjs/core/http-only';
 import { container } from '@skyra/http-framework';
 
-export function setupAPI() {
+export function setupAPI(): void {
 	container.api = new API(container.rest);
 }
 

@@ -1,7 +1,7 @@
 import { envIsDefined, envParseString } from '@skyra/env-utilities';
 import { Registry } from '@skyra/http-framework';
 
-export async function registerCommands() {
+export async function registerCommands(): Promise<void> {
 	const registry = new Registry({});
 
 	if (envIsDefined('REGISTRY_GUILD_ID')) {

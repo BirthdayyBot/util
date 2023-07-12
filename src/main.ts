@@ -7,7 +7,7 @@ import { init, load } from '@skyra/http-framework-i18n';
 import { createBanner } from '@skyra/start-banner';
 import gradient from 'gradient-string';
 
-setup();
+void setup();
 
 await load(new URL('../src/locales', import.meta.url));
 await init({ fallbackLng: 'en-US', returnNull: false, returnEmptyString: false });

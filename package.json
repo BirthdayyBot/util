@@ -86,7 +86,8 @@
 	"eslintConfig": {
 		"extends": "@sapphire",
 		"rules": {
-			"@typescript-eslint/no-base-to-string": "off"
+			"@typescript-eslint/no-base-to-string": "off",
+			"@typescript-eslint/no-unsafe-call": "off"
 		}
 	},
 	"packageManager": "yarn@3.6.1",

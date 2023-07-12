@@ -7,7 +7,7 @@ import { init, load } from '@skyra/http-framework-i18n';
 import { createBanner } from '@skyra/start-banner';
 import gradient from 'gradient-string';
 
-void setup();
+setup();
 
 await load(new URL('../src/locales', import.meta.url));
 await init({ fallbackLng: 'en-US', returnNull: false, returnEmptyString: false });
@@ -17,7 +17,6 @@ setupAPI();
 await client.load();
 
 void registerCommands();
-
 const address = envParseString('HTTP_ADDRESS', '0.0.0.0');
 const port = envParseInteger('HTTP_PORT', 3000);
 await client.listen({ address, port });

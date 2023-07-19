@@ -13,17 +13,22 @@ model User {
   /// Whether or not they have currently subscribed to a premium plan
   premium Boolean @default(false)
 
-  tier Tiers?
+  tier Tiers @default(Free)
 
   /// Maximum usage guild Premium
   /// @tier 1 (Premium)
   /// @tier 3 (Supporter)
   maximumPremium Int @default(0) @map("maximum_premium") @db.SmallInt
 
+  createdAt DateTime @default(now()) @map("created_at")
+
+  updatedAt DateTime @updatedAt @map("updated_at")
+
   transactions Transaction[]
 
   guild Guild[]
 
+  @@index([id])
   @@map("user")
 }
 
@@ -32,28 +37,43 @@ model Guild {
 
   userId BigInt @map("user_id")
 
+  tier Tiers @default(Free)
+
   premium Boolean @default(false)
 
-  user User @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now()) @map("created_at")
 
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  description String? @db.Text
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([id])
   @@map("guild")
 }
 
 model Transaction {
-  id BigInt @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
   userId BigInt @map("user_id")
 
   amount Int
 
-  tier Tiers
+  createdAt DateTime @default(now()) @map("created_at")
+
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  tier Tiers @default(Free)
 
   user User @relation(fields: [userId], references: [id])
 
+  @@index([id])
   @@map("transaction")
 }
 
 enum Tiers {
+  Free
   Premium
   Supporter
   CustomBot

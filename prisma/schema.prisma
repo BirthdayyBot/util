@@ -8,63 +8,70 @@ datasource db {
 }
 
 model User {
+  // The user's Discord ID
   id BigInt @id
 
-  /// Whether or not they have currently subscribed to a premium plan
+  // Whether or not they have currently subscribed to a premium plan
   premium Boolean @default(false)
 
+  // The tier of the user
   tier Tiers @default(Free)
 
-  /// Maximum usage guild Premium
-  /// @tier 1 (Premium)
-  /// @tier 3 (Supporter)
+  // Maximum usage guild Premium
+  // @tier 1 (Premium)
+  // @tier 3 (Supporter)
   maximumPremium Int @default(0) @map("maximum_premium") @db.SmallInt
 
   createdAt DateTime @default(now()) @map("created_at")
-
   updatedAt DateTime @updatedAt @map("updated_at")
 
   transactions Transaction[]
-
-  guild Guild[]
+  guild        Guild[]
 
   @@index([id])
   @@map("user")
 }
 
 model Guild {
+  // The guild's Discord ID
   id BigInt @id
 
+  // The guild's name on Discord
+  name String? @db.Text
+
+  // The Discord ID of the user who activated the premium
   userId BigInt @map("user_id")
 
+  // The tier of the guild
   tier Tiers @default(Free)
 
+  // Whether or not they have currently subscribed to a premium plan
   premium Boolean @default(false)
 
   createdAt DateTime @default(now()) @map("created_at")
-
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  description String? @db.Text
-
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user User @relation(fields: [userId], references: [id], onDelete: NoAction)
 
   @@index([id])
   @@map("guild")
 }
 
 model Transaction {
-  id Int @id @default(autoincrement())
+  // This is the transaction ID from the payment provider
+  id Int @id
 
+  // The user's Discord ID
   userId BigInt @map("user_id")
 
+  // The amount of money that was paid
   amount Int
 
-  createdAt DateTime @default(now()) @map("created_at")
-
-  updatedAt DateTime @updatedAt @map("updated_at")
-
+  // The tier of the transaction
   tier Tiers @default(Free)
+
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
   user User @relation(fields: [userId], references: [id])
 

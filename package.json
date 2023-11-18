@@ -24,7 +24,7 @@
 	"dependencies": {
 		"@discordjs/builders": "^1.6.3",
 		"@discordjs/collection": "^1.5.1",
-		"@discordjs/core": "^0.6.0",
+		"@discordjs/core": "^1.1.1",
 		"@prisma/client": "^5.0.0",
 		"@sapphire/async-queue": "^1.5.0",
 		"@sapphire/duration": "^1.1.0",

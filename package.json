@@ -90,9 +90,9 @@
 			"@typescript-eslint/no-unsafe-call": "off"
 		}
 	},
-	"packageManager": "yarn@3.6.1",
+	"packageManager": "yarn@4.0.2",
 	"volta": {
 		"node": "18.17.0",
-		"yarn": "3.6.1"
+		"yarn": "4.0.2"
 	}
 }

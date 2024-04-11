@@ -2,5 +2,6 @@
 	"enabled": "Enabled",
 	"disabled": "Disabled",
 	"unset": "Unset",
-	"none": "None"
+	"none": "None",
+	"infoEmbedDescription": "Util is a private bot that manages the operation limits of the BirthdayyBot. This is an HTTP only bot built on top of [Skyra HTTP Framework](https://www.npmjs.com/package/@skyra/http-framework)."
 }

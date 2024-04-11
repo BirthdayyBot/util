@@ -1,14 +1,23 @@
-import { setup as envRun } from '@skyra/env-utilities';
+import { setup as envSetup } from '@skyra/env-utilities';
 import { initializeSentry, setInvite, setRepository } from '@skyra/shared-http-pieces';
 
-import '#lib/setup/logger';
-import '#lib/setup/prisma';
+
 import '@skyra/shared-http-pieces/register';
 
-export function setup() {
-	envRun(new URL('../../../src/.env', import.meta.url));
+envSetup(new URL('../../../src/.env', import.meta.url));
+setInvite('948377113457745990', '326417868864');
+setRepository('https://github.com/BirthdayyBot/util');
+initializeSentry();
 
-	setRepository('iriss');
-	setInvite('948377113457745990', '326417868864');
-	initializeSentry();
+
+import '#lib/setup/api';
+import '#lib/setup/fastify';
+import '#lib/setup/logger';
+import '#lib/setup/prisma';
+
+
+
+export async function setup() {
+	// Load all routes
+	await import('#api/routes/_load');
 }

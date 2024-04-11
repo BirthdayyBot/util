@@ -1,87 +1,35 @@
 generator client {
-  provider = "prisma-client-js"
+    provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-model User {
-  // The user's Discord ID
-  id BigInt @id
-
-  // Whether or not they have currently subscribed to a premium plan
-  premium Boolean @default(false)
-
-  // The tier of the user
-  tier Tiers @default(Free)
-
-  // Maximum usage guild Premium
-  // @tier 1 (Premium)
-  // @tier 3 (Supporter)
-  maximumPremium Int @default(0) @map("maximum_premium") @db.SmallInt
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  transactions Transaction[]
-  guild        Guild[]
-
-  @@index([id])
-  @@map("user")
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
 }
 
 model Guild {
-  // The guild's Discord ID
-  id BigInt @id
+    // The guild's Discord ID
+    id BigInt @id
 
-  // The guild's name on Discord
-  name String? @db.Text
+    /// The maximum amount of characters for the announcement message
+    /// @tier 1 (128)
+    /// @tier 2 (256)
+    /// @tier 3 (512)
+    /// @default 0
+    maximumAnnouncementLength    Int @default(0) @map("maximum_announcement_length") @db.SmallInt
+    /// The maximum amount of roles that the bot can give to the user
+    /// @tier 1 (3)
+    /// @tier 2 (5)
+    /// @tier 3 (10)
+    /// @default 1
+    maximumGiveableBirthdayRoles Int @default(1) @map("maximum_giveable_birthday_roles") @db.SmallInt
 
-  // The Discord ID of the user who activated the premium
-  userId BigInt @map("user_id")
+    /// The maximum birthday amount that can be seen in advance with the /birthdayy list command
+    /// @tier 1 (30)
+    /// @tier 2 (50)
+    /// @tier 3 (100)
+    /// @default 10
+    maximumBirthdayListAmount Int @default(10) @map("maximum_birthday_list_amount") @db.SmallInt
 
-  // The tier of the guild
-  tier Tiers @default(Free)
-
-  // Whether or not they have currently subscribed to a premium plan
-  premium Boolean @default(false)
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  user User @relation(fields: [userId], references: [id], onDelete: NoAction)
-
-  @@index([id])
-  @@map("guild")
-}
-
-model Transaction {
-  // This is the transaction ID from the payment provider
-  id Int @id
-
-  // The user's Discord ID
-  userId BigInt @map("user_id")
-
-  // The amount of money that was paid
-  amount Int
-
-  // The tier of the transaction
-  tier Tiers @default(Free)
-
-  createdAt DateTime @default(now()) @map("created_at")
-  updatedAt DateTime @updatedAt @map("updated_at")
-
-  user User @relation(fields: [userId], references: [id])
-
-  @@index([id])
-  @@map("transaction")
-}
-
-enum Tiers {
-  Free
-  Premium
-  Supporter
-  CustomBot
+    @@map("guild")
 }

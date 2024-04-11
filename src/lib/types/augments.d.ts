@@ -1,4 +1,4 @@
-import type { IntegerString } from '@skyra/env-utilities';
+import type { ArrayString, IntegerString } from '@skyra/env-utilities';
 
 declare module '@skyra/env-utilities' {
 	interface Env {
@@ -12,5 +12,12 @@ declare module '@skyra/env-utilities' {
 		HTTP_PORT: IntegerString;
 
 		REGISTRY_GUILD_ID: string;
+
+		API_ADDRESS: string;
+		API_PORT: IntegerString;
+
+		CLIENT_OWNERS: ArrayString;
+
+		INTERNAL_API_TOKEN: string;
 	}
 }

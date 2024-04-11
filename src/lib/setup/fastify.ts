@@ -1,10 +1,12 @@
-import { API } from '@discordjs/core/http-only';
 import { container } from '@skyra/http-framework';
+import fastify from 'fastify';
 
-container.api = new API(container.rest);
+const server = fastify();
+
+container.server = server;
 
 declare module '@sapphire/pieces' {
 	interface Container {
-		api: API;
+		server: typeof server;
 	}
 }

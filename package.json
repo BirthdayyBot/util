@@ -65,7 +65,7 @@
 		"typescript": "^5.1.6"
 	},
 	"resolutions": {
-		"ansi-regex": "^5.0.1",
+		"ansi-regex": "^6.3.0",
 		"minimist": "^1.2.8"
 	},
 	"engines": {
